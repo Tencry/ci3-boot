@@ -1,0 +1,9 @@
+{
+    "name": "tencry/ci3-boot",
+    "description": "Bootstrap CodeIgniter 3.1.* with Twig 2.11.*",
+    "type": "webapp",
+    "require": {
+        "codeigniter/framework": "3.1.*",
+        "twig/twig": "2.11.*"
+    }
+}
