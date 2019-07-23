@@ -10,12 +10,17 @@ class Twig {
 
 	public function __construct()
 	{
-		$this->_loader = new \Twig\Loader\FilesystemLoader(VIEWPATH);
-		$this->_twig   = new \Twig\Environment($this->_loader, [
-			'debug' => ENVIRONMENT !== 'production',
-		    'cache' => ENVIRONMENT !== 'development' ? APPPATH . 'cache' : false,
-		    'strict_variables' => ENVIRONMENT === 'testing' ? true : false,
-		]);
+		try {
+			$this->_loader = new \Twig\Loader\FilesystemLoader(VIEWPATH);
+			
+			$this->_twig   = new \Twig\Environment($this->_loader, [
+				'debug' => ENVIRONMENT !== 'production',
+			    'cache' => ENVIRONMENT !== 'development' ? APPPATH . 'cache' : false,
+			    'strict_variables' => ENVIRONMENT === 'testing' ? true : false,
+			]);
+		} catch (Exception $e) {
+			show_error($e->getMessage(), 500, 'Twig Exception');
+		}
 	}
 
 	public function load($file)
@@ -25,6 +30,10 @@ class Twig {
 
 	public function render($file, $data = [])
 	{
-		return $this->_twig->render($file . '.' . $this->EXT, $data);
+		try {
+			return $this->_twig->render($file . '.' . $this->EXT, $data);
+		} catch (Exception $e) {
+			show_error($e->getMessage(), 500, 'Twig Exception');
+		}
 	}
 }
