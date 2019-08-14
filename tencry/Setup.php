@@ -1,9 +1,24 @@
 <?php
 
+include 'config.php';
+
 class Setup {
 
-	private $app_dir = 'app2';
-	private $public_dir = 'public2';
+	private $app_dir = 'application';
+	private $public_dir = 'public_html';
+
+	public function __construct()
+	{
+		global $config;
+
+		if (isset($config['app_dir'])) {
+			$this->app_dir = $config['app_dir'];
+		}
+
+		if (isset($config['public_dir'])) {
+			$this->public_dir = $config['public_dir'];
+		}
+	}
 
 	private function copyApp()
 	{
