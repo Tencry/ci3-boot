@@ -6,7 +6,7 @@ class Twig {
 	private $_loader;
 	private $_twig;
 
-	protected $EXT = 'twig';
+	protected $EXT = '.twig';
 
 	public function __construct()
 	{
@@ -31,9 +31,18 @@ class Twig {
 	public function render($file, $data = [])
 	{
 		try {
-			return $this->_twig->render($file . '.' . $this->EXT, $data);
+			return $this->_twig->render($file . $this->EXT, $data);
 		} catch (Exception $e) {
 			show_error($e->getMessage(), 500, 'Twig Exception');
 		}
+	}
+
+	public function add_function($name, $function = NULL)
+	{
+		if ( $function === NULL ) {
+			$function = $name;
+		}
+		$function = new \Twig\TwigFunction($name, $function);
+		$this->_twig->addFunction($function);
 	}
 }
